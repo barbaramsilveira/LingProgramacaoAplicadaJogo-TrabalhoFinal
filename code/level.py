@@ -1,29 +1,28 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import random
-
 import pygame
 from code.player import Player
 from code.obstacle import Obstacle
 from code.entityFactory import EntityFactory
 from code.const import WIN_WIDTH, WIN_HEIGHT
+from code.score import Score
 
 class Level:
-    def __init__(self, window, name, game_mode):
+    def __init__(self, window, name, ship_file, player_name):
         self.window = window
         self.name = name
-        self.game_mode = game_mode
+        self.ship_file = ship_file
+        self.player_name = player_name
 
         # fundo (lista de backgrounds)
         self.bg_list = EntityFactory.get_entity('Level1Bg')
 
-        # player
-        self.player = Player(game_mode)  # game_mode aqui é o nome da nave escolhida
+        # player (usa nave escolhida)
+        self.player = Player(ship_file)
 
         # obstáculos
         self.obstacles = [Obstacle() for i in range(5)]
-
-        # lista de entidades que têm rect (player + obstáculos)
         self.entity_list = self.obstacles + [self.player]
 
         self.score = 0
@@ -37,7 +36,7 @@ class Level:
                     pygame.quit()
                     quit()
 
-            # mover e desenhar fundo separado
+            # mover e desenhar fundo
             for bg in self.bg_list:
                 bg.move()
                 bg.draw(self.window)
@@ -57,9 +56,10 @@ class Level:
                     obs.rect.x = random.randint(0, WIN_WIDTH - 40)
 
                     if self.player.lives <= 0:
-                        print("Game Over!")
-                        pygame.quit()
-                        quit()
+                        from code.score import Score
+                        score_screen = Score(self.window, self.ship_file)
+                        score_screen.save(self.score, self.player_name)
+                        return self.score
 
             # pontuação
             score_text = self.font.render(f"Score: {self.score}", True, (255,255,255))
