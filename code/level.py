@@ -8,6 +8,8 @@ from code.entityFactory import EntityFactory
 from code.const import WIN_WIDTH, WIN_HEIGHT
 from code.score import Score
 
+# Classe responsável pelas fases do jogo:
+
 class Level:
     def __init__(self, window, name, ship_file, player_name):
         self.window = window
@@ -50,7 +52,6 @@ class Level:
             for obs in self.obstacles:
                 if self.player.rect.colliderect(obs.rect):
                     self.player.lives -= 1
-                    print(f"Colisão! Vidas restantes: {self.player.lives}")
                     # reposiciona o obstáculo para não ficar colidindo em loop
                     obs.rect.y = -50
                     obs.rect.x = random.randint(0, WIN_WIDTH - 40)
@@ -61,10 +62,14 @@ class Level:
                         score_screen.save(self.score, self.player_name)
                         return self.score
 
-            # pontuação
-            score_text = self.font.render(f"Score: {self.score}", True, (255,255,255))
+            # Exibe pontuação na tela
+            score_text = self.font.render(f"Pontuação: {self.score}", True, (255,255,255))
             self.window.blit(score_text, (10,10))
             self.score += 1
+
+            # Exibe vidas restantes na tela
+            lives_text = self.font.render(f"Vidas restantes: {self.player.lives}", True, (255, 255, 255))
+            self.window.blit(lives_text, (10, 40))
 
             pygame.display.flip()
             clock.tick(60)

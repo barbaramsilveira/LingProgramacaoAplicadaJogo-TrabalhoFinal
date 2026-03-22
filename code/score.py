@@ -1,14 +1,17 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Classe que cuida do score do jogo
+
+import sys
 import pygame
 from pygame.constants import KEYDOWN, K_RETURN, K_BACKSPACE
 from pygame.font import Font
 from datetime import datetime
-
 from pygame.rect import Rect
 from pygame.surface import Surface
-
 from code.const import WIN_WIDTH, WIN_HEIGHT, COLOR_SILVER, COLOR_TURQUOISE
 from code.DBProxy import DBProxy
-
 
 class ScoreMenu:
     def __init__(self, window: Surface):
@@ -26,14 +29,16 @@ class ScoreMenu:
         clock = pygame.time.Clock()
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.type == KEYDOWN:
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == KEYDOWN:
                     return
 
             self.window.blit(self.surf, self.rect)
             title = self.font.render("Ranking de Pontuação", True, COLOR_SILVER)
             self.window.blit(title, (WIN_WIDTH // 2 - title.get_width() // 2, 50))
 
-            # cada linha: id, name, ship, score, date
             for i, s in enumerate(scores):
                 _, name, ship, score, date = s
                 text = self.font.render(
@@ -46,7 +51,6 @@ class ScoreMenu:
             pygame.display.flip()
             clock.tick(30)
 
-
 class Score:
     def __init__(self, window: Surface, ship_file: str):
         self.window = window
@@ -57,7 +61,6 @@ class Score:
     def save(self, score: int, player_name: str = None):
         db_proxy = DBProxy("DBScore")
 
-        # se já veio o nome do Level, usa direto
         if player_name:
             db_proxy.save({
                 "name": player_name,
@@ -69,17 +72,15 @@ class Score:
             ScoreMenu(self.window).run()
             return
 
-        # caso contrário, pede input do jogador
         name = ""
         while True:
             self.window.blit(self.surf, self.rect)
             self._draw_text(48, "GAME OVER", COLOR_SILVER, (WIN_WIDTH // 2, 100))
-            self._draw_text(24, "Digite seu nome (até 4 letras):", COLOR_TURQUOISE, (WIN_WIDTH // 2, 200))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    return
+                    sys.exit()
                 elif event.type == KEYDOWN:
                     if event.key == K_RETURN and len(name) > 0:
                         db_proxy.save({
@@ -105,7 +106,6 @@ class Score:
         surf: Surface = font.render(text, True, color).convert_alpha()
         rect: Rect = surf.get_rect(center=center)
         self.window.blit(surf, rect)
-
 
 def get_formatted_date():
     current_datetime = datetime.now()

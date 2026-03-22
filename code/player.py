@@ -1,15 +1,17 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# Classe responsável pelo jogador e suas ações no jogo
+
 import pygame
 from code.const import WIN_WIDTH, WIN_HEIGHT
 
 class Player:
     def __init__(self, ship_file="Player1.png"):
         self.surf = pygame.image.load("asset/" + ship_file).convert_alpha()
-        self.surf = pygame.transform.scale(self.surf, (60, 60))
+        self.surf = pygame.transform.scale(self.surf, (70, 70))
         self.rect = self.surf.get_rect(center=(WIN_WIDTH//2, WIN_HEIGHT-80))
         self.speed = 2
         self.lives = 10
-
-
 
     def move(self):
         keys = pygame.key.get_pressed()

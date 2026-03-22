@@ -1,3 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Obstáculos do jogo
+
 import pygame, random
 from code.const import WIN_WIDTH, WIN_HEIGHT
 
@@ -14,7 +19,6 @@ class Obstacle:
 
     def move(self):
         self.rect.y += self.speed
-        # reaparece no topo quando sai da tela
         if self.rect.top > WIN_HEIGHT:
             self.rect.x = random.randint(0, WIN_WIDTH - 40)
             self.rect.y = random.randint(-150, -40)

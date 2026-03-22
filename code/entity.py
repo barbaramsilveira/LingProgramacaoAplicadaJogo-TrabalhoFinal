@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# Classe base para os objetos do jogo
+
 from abc import ABC, abstractproperty, abstractmethod
 
 import pygame
-
 
 class Entity(ABC):
     def __init__(self, name: str, position: tuple):

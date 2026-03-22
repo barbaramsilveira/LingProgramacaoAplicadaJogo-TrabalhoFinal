@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+# Menu para digitação de nome do jogador:
+
 import pygame
 from code.const import WIN_WIDTH, WIN_HEIGHT, COLOR_SILVER, COLOR_PURPLE, COLOR_TURQUOISE
-
 
 class MenuName:
     def __init__(self, window):

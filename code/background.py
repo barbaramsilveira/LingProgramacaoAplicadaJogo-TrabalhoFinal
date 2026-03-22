@@ -1,10 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import pygame
-
 from code.const import WIN_WIDTH, WIN_HEIGHT
 
+# Define o fundo principal do jogo
 
 class Background:
     def __init__(self, filename="background.png", speed=2):

@@ -1,3 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Responsavel por fazer a comunicacao com o banco de dados Sqlite3
+
 import sqlite3
 
 class DBProxy:
@@ -5,6 +10,7 @@ class DBProxy:
         self.conn = sqlite3.connect(f"{db_name}.db")
         self.create_table()
 
+# Criação de tabelas
     def create_table(self):
         cursor = self.conn.cursor()
         cursor.execute('''
@@ -18,6 +24,7 @@ class DBProxy:
         ''')
         self.conn.commit()
 
+# Salva nome do jogador, nave escolhida, pontuação e data
     def save(self, record: dict):
         cursor = self.conn.cursor()
         cursor.execute('''
@@ -26,6 +33,7 @@ class DBProxy:
         ''', (record['name'], record['ship'], record['score'], record['date']))
         self.conn.commit()
 
+# Salva o ranking com os 5 melhores jogadores
     def retrieve_top5(self):
         cursor = self.conn.cursor()
         cursor.execute('''

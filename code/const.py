@@ -1,3 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Arquivo responsavel por armazenar as variaveis que serao utilizadas no Jogo, facilitando a futura manutencao do codigo
+
 # C
 COLOR_ORANGE = (255, 128, 0)
 COLOR_PURPLE = (128, 0, 128)

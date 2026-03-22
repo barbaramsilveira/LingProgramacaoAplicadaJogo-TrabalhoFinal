@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+# Menu de escolha da nave:
+
 import pygame
 from code.const import WIN_WIDTH, WIN_HEIGHT, COLOR_TURQUOISE, COLOR_SILVER
-
 
 class MenuShip:
     def __init__(self, window):
